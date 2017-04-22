@@ -9,4 +9,5 @@ directory.
 The original Github site is https://github.com/JonHub/attoDuino which is compatible
 with the Arduino IDE version 1.6.1 or earlier.
 
-See Wiki pages for additional information.
+See Wiki pages for additional information on how to adapt to recent versions of
+the Arduino IDE.
