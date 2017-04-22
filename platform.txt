@@ -7,7 +7,7 @@
 #atto
 #name=Arduino ARM (32-bits) Boards
 name=AttoDuino (32-bits) Boards
-version=1.5.5
+version=1.6.18
 
 # SAM3 compile variables
 # ----------------------
@@ -59,7 +59,9 @@ recipe.c.o.pattern="{compiler.path}{compiler.c.cmd}" -c -O0 -w -fno-rtti -fno-ex
 recipe.cpp.o.pattern="{compiler.path}{compiler.cpp.cmd}" -c -O0 -w -fno-rtti -fno-exceptions -ffunction-sections -fdata-sections -mthumb -mcpu={build.mcu} -mfloat-abi=hard -mfpu=fpv4-sp-d16 -fsingle-precision-constant -DARM_FLOAT -DF_CPU={build.f_cpu} -MMD -DARDUINO={runtime.ide.version} -DENERGIA=13 {includes} "{source_file}" -o "{object_file}"
 
 ## Create archives
-recipe.ar.pattern="{compiler.path}{compiler.ar.cmd}" {compiler.ar.flags} "{build.path}/{archive_file}" "{object_file}"
+#recipe.ar.pattern="{compiler.path}{compiler.ar.cmd}" {compiler.ar.flags} "{build.path}/{archive_file}" "{object_file}"
+# Recommended upgrade to Arduino IDE 1.8.2
+recipe.ar.pattern="{compiler.path}{compiler.ar.cmd}" {compiler.ar.flags} "{archive_file_path}" "{object_file}"
 
 #atto linker script
 recipe.c.combine.pattern="{compiler.path}{compiler.c.elf.cmd}" -O0 -nostartfiles -nostdlib -Wl,--gc-sections "-T{build.variant.path}/{build.ldscript}" -Wl,--entry=ResetISR -mthumb -mcpu=cortex-m4 -mfloat-abi=hard -mfpu=fpv4-sp-d16 -fsingle-precision-constant -o "{build.path}/{build.project_name}.elf" {object_files} "{build.path}/{archive_file}" "-L{build.path}" -lm -lc -lgcc "-L{build.path}" -lm
@@ -78,8 +80,10 @@ recipe.size.regex=\.text\s+([0-9]+).*
 # AttoDuino Uploader Tools
 # ------------------------
 
-tools.sflashmac.cmd.path={runtime.ide.path}/hardware/arduino/attoDuino/tools/sflash-mac/sflash
-tools.sflashwin.cmd.path={runtime.ide.path}/hardware/arduino/attoDuino/tools/sflash-win/sflash.exe
+#tools.sflashmac.cmd.path={runtime.ide.path}/hardware/arduino/attoDuino/tools/sflash-mac/sflash
+#tools.sflashwin.cmd.path={runtime.ide.path}/hardware/arduino/attoDuino/tools/sflash-win/sflash.exe
+tools.sflashmac.cmd.path={runtime.hardware.path}/cortex-m4/tools/sflash-mac/sflash
+tools.sflashwin.cmd.path={runtime.hardware.path}/cortex-m4/tools/sflash-win/sflash.exe
 
 tools.sflashmac.upload.params.verbose=
 tools.sflashwin.upload.params.verbose=
